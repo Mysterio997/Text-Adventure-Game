@@ -1,68 +1,156 @@
-# 4 different places
-# item they can pick up and use
-# one way to lose
-# number input 
-# input error handling / validation
-LORE = "You wake up feeling dizzy and tired in the middle of the street outside your house. " \
-"You do not know why you are asleep in the road but you notice all the houses are abondoned aside yours which is glowing brightly with apadlock and chain surrounding its entrances. " \
-"You must get home." 
-STARTGAME = "false"
-START = input("To Start The Game, Type Start.")
-HOUSE = "1"
-GONETOHOUSE1 = "false"
-GONETOHOUSE2 = "false"
-GONETOHOUSE3 = "false"
-GONETOHOUSE11 = "false"
-GONETOHOUSE22 = "false"
-GONETOHOUSE33 = "false"
-HASKEY = "false"
+HASCODE = "false"
+STARTGAME = input("Please type {start}, to start the game. Any other input will end the program. ")
+STARTGAME1 = "false"
+CODE = "1"
 
-
-
-if START.lower() == ("start"):
-    STARTGAME = "true"
-    print()
-    print("Game Is Now Starting...")
-    print()
-else:
-    print("You did not type start, please restart the game.")
-
-while HASKEY == "false":
-    if STARTGAME == ("true"):
-        print(f"{LORE}")
-        HOUSE = input("You have 3 houses that look eerie and abondoned but may posses a key to your home which one will you enter first? Please input 1,2 or 3. ")
-        if HOUSE == ("1"):
-            print(f"You have chosen House {HOUSE}")
-            GONETOHOUSE11 = "true"
-        elif HOUSE == ("2"):
-            print(f"You have chosen House {HOUSE}")
-            GONETOHOUSE22 = "true"
-        elif HOUSE == ("3"):
-            print(f"You have chosen House {HOUSE}")
-            GONETOHOUSE33 = "true"
-        elif HOUSE == ("4") and (HASKEY == "false"):
-            print(f"You have your locked home but you do not have a key, please restart the game.")
-        else:
-            print("You did not choose a house, please restart the game.")
-            break
-        if GONETOHOUSE11 == "true":
-            print("You head into the 1st House and try the door, it is unlocked and upon opening it a musky smell surrounds you.")
-            print("You search around the home and find a rock with a engraving on it, the rock has the words LEAVE etched into it's surface.")
-            print("After a while of searching the home you find nothing of use, you decide to leave.")
-            GONETOHOUSE1 = "true"
-        elif GONETOHOUSE22 == "true":
-            print("You head into the 2nd House and try the door, it is unlocked and upon opening it a musky smell surrounds you.")
-            print("You search around the home and find a old note with 4 numbers on it, the note has the numbers 2059 written on it. What does this number mean?")
-            print("After finding the note you decide to leave the home.")
-            GONETOHOUSE2 = "true"
-        if GONETOHOUSE33 == "true":
-            print("You head into the 3rd House and try the door, it is unlocked and upon opening it a musky smell surrounds you.")
-            print("You search around the home and find a old safe that is stashed away with a keypad to open it, what could the code be?")
-            CODE = input("Please input a 4 digit code.")
-        if CODE == "2059":
-            print("The safe opens and a key is inside of it, maybe this opens the padlock. You leave the house and head home.")
-            HASKEY == "true"
+if STARTGAME.lower() == ("start"):
+    STARTGAME1 = "True"
+    print("Starting Game Shortly. . .")
 else: 
-    print("The code is wrong and the safe sounds a alarm gaining interest from some nearby zombies, they attack you.")
-    print("You Lose.")
+    print("Invalid input, program ending.")
+    exit()
+
+if STARTGAME1 == "True":
+    print("You wake up in the middle of curry's after a crazy black friday sale and it is locked with nobody around, you must escape.")
+    CONTINUE = input("Press {E} to continue.")
+else: 
+    print("STARTGAME ERROR")
+    exit()
+
+CONTINUE = CONTINUE.lower()
+
+if CONTINUE.lower() == "e":
+    print("There are 4 store sections: Electronics, Tills, Warehouse and Exit. You must find the code to escape the building.")
+    CONTINUE = "True"
+else: 
+    print("E was not inputted, ending program.")
+    exit()
+
+if CONTINUE == "True":
+    CHOICE1 = input(f"Where would you like to search? Electronics, Tills or Warehouse.")
+else:
+    print("Invalid input, program ending.")
+    exit()
+CHOICE1 = CHOICE1.lower()
+if CHOICE1.lower() == "electronics":
+    print("You head over to Electronics.")
+    print("You search around Electronics and do not appear to find anything, you get fustrated and punch a laptop. You move on.")
+    ELECTRONICSDONE = "True"
+    TILLSDONE = "false"
+    WAREHOUSEDONE = "false"
+elif CHOICE1.lower() == "tills":
+    print("You head over to the Tills.")
+    print("You search around the tills and find nothing. You Move On")
+    ELECTRONICSDONE = "false"
+    TILLSDONE = "True"
+    WAREHOUSEDONE = "false"
+elif CHOICE1.lower() == "warehouse":
+    print("You head over to the Warehouse.")
+    print("You head over to the Warehouse and after a long time searching you find a note that says, in-case of locked in combination is 5164. You have the code.")
+    ELECTRONICSDONE = "false"
+    TILLSDONE = "false"
+    WAREHOUSEDONE = "True"
+    HASCODE = "True"
+else:
+    print("Invalid choice inputted, ending program.")
+    exit()
+
+if HASCODE == "True":
+    print("You have found the code and you head out to the entrance, you reach the alarm system and it is asking you input the code.")
+    CODE = input("Please insert the pin to unlock doors.")
+
+if CODE == "5164" and HASCODE == "True":
+    print("You unlock the door and leave Curry's, you are now free. However, a criminal noticed the unlocked door and robs the curry's.")
+    print("Game over.")
+    exit()
+elif CODE != "5164" and HASCODE == "True":
+    print("You input the wrong code and the alarms blare loudly, police show up and arrest you for burglary.")
+    print("Game Over.")
+    exit()
+
+if HASCODE == "false":
+    CHOICE2 = input(f"You have now searched {CHOICE1}, where would you like to search next? Electronics, Tills or Warehouse, you cannot return to a place you have already been.")
+
+if CHOICE2.lower() == "electronics" and (ELECTRONICSDONE == "false"):
+    print("You head over to Electronics.")
+    print("You search around Electronics and do not appear to find anything, you get fustrated and punch a laptop -£2000. You move on.")
+    PROPERTYDAMAGED = 2000
+    ELECTRONICSDONE = "True"
+elif CHOICE2.lower() == "tills" and TILLSDONE == "false":
+    print("You head over to the Tills.")
+    print("You search around the tills and find nothing. You Move On")
+    TILLSDONE = "True"
+elif CHOICE2.lower() == "warehouse" and WAREHOUSEDONE == "false":
+    print("You head over to the Warehouse.")
+    print("You head over to the Warehouse and after a long time searching you find a note that says, in-case of locked in combination is 5164. You have the code.")
+    WAREHOUSEDONE = "True"
+    HASCODE = "True"
+elif CHOICE2.lower() == "electronics" and ELECTRONICSDONE == "True":
+    print("You cannot search the same part of the store again, please try again.")
+    exit()
+elif CHOICE2.lower() == "tills" and TILLSDONE == "True":
+    print("You cannot search the same part of the store again, please try again.")
+    exit()
+elif CHOICE2.lower() == "warehouse" and WAREHOUSEDONE == "True":
+    print("You cannot search the same part of the store again, please try again.")
+    exit()
+else:
+    print("Invalid choice inputted, ending program.")
+    exit()
+
+if HASCODE == "True":
+    print("You have found the code and you head out to the entrance, you reach the alarm system and it is asking you input the code.")
+    CODE = input("Please insert the pin to unlock doors.")
+
+if CODE == "5164" and HASCODE == "True":
+    print("You unlock the door and leave Curry's, you are now free. However, a criminal noticed the unlocked door and robs the curry's.")
+    print("Game over.")
+    exit()
+elif CODE != "5164" and HASCODE == "True":
+    print("You input the wrong code and the alarms blare loudly, police show up and arrest you for burglary.")
+    print("Game Over.")
+    exit()
+
+
+if HASCODE == "false":
+    CHOICE3 = input(f"You have now searched {CHOICE2}, where would you like to search next? Electronics, Tills or Warehouse, you cannot return to a place you have already been.")
+
+if CHOICE3.lower() == "electronics" and ELECTRONICSDONE == "false":
+    print("You head over to Electronics.")
+    print("You search around Electronics and do not appear to find anything, you get fustrated and punch a laptop. You move on.")
+    PROPERTYDAMAGED = 2000
+    ELECTRONICSDONE = "True"
+elif CHOICE3.lower() == "tills" and TILLSDONE == "false":
+    print("You head over to the Tills.")
+    print("You search around the tills and find nothing. You Move On")
+    TILLSDONE = "True"
+elif CHOICE3.lower() == "warehouse" and WAREHOUSEDONE == "false":
+    print("You head over to the Warehouse.")
+    print("You head over to the Warehouse and after a long time searching you find a note that says, in-case of locked in combination is 5164. You have the code.")
+    WAREHOUSEDONE = "True"
+    HASCODE = "True"
+elif CHOICE3.lower() == "electronics" and ELECTRONICSDONE == "True":
+    print("You cannot search the same part of the store again, please try again.")
+    exit()
+elif CHOICE3.lower() == "tills" and TILLSDONE == "True":
+    print("You cannot search the same part of the store again, please try again.")
+    exit()
+elif CHOICE3.lower() == "warehouse" and WAREHOUSEDONE == "True":
+    print("You cannot search the same part of the store again, please try again.")
+    exit()
+else:
+    print("Invalid choice inputted, ending program.")
+    exit()
+
+if HASCODE == "True":
+    print("You have found the code and you head out to the entrance, you reach the alarm system and it is asking you input the code.")
+    CODE = input("Please insert the pin to unlock doors.")
+
+if CODE == "5164" and HASCODE == "True":
+    print("You unlock the door and leave Curry's, you are now free. However, a criminal noticed the unlocked door and robs the curry's.")
+    print("Game over.")
+    exit()
+elif CODE != "5164" and HASCODE == "True":
+    print("You input the wrong code and the alarms blare loudly, police show up and arrest you for burglary.")
+    print("Game Over.")
     exit()
