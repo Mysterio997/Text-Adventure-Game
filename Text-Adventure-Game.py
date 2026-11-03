@@ -50,6 +50,7 @@ VISITEDDOORS = False
 WAREHOUSECHECK = False
 DOORCODE = ""
 HASCODE1 = False
+HASCODE11 = False
 
 while HASCODE == False and WAREHOUSECHECK == False and HASCODE1 == False:
     while HASCODE == False and INPUTSAID == False:
@@ -103,12 +104,10 @@ while HASCODE == False and WAREHOUSECHECK == False and HASCODE1 == False:
             INPUTSAID = False
             HASCODE11 = True
             WAREHOUSECHECK = False
-        else:
-            print("Invalid input.")
 
 while DOORCODE == True:
     DOORINPUT = input("Please input the door code.")
-    if DOORINPUT == "4745" and HASCODE == True:
+    if DOORINPUT == 4745 and HASCODE == True:
         print("You have inputted the correct code, game over. Thanks for playing!")
         exit()
     elif DOORINPUT != 4745 and HASCODE == True:
