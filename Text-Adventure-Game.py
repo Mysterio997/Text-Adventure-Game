@@ -107,11 +107,9 @@ while HASCODE == False and WAREHOUSECHECK == False and HASCODE1 == False:
 
 while DOORCODE == True:
     DOORINPUT = input("Please input the door code.")
-    if DOORINPUT == 4745 and HASCODE == True:
+    if DOORINPUT == "4745":
         print("You have inputted the correct code, game over. Thanks for playing!")
         exit()
-    elif DOORINPUT != 4745 and HASCODE == True:
+    else: 
         print("You input the wrong code, game over!")
         exit()
-    else: 
-        print(bcolors.WARNING + "Error with HAS CODE LOOP LINE 107." + bcolors.ENDC)
