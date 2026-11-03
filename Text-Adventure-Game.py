@@ -1,156 +1,111 @@
-HASCODE = "false"
-STARTGAME = input("Please type {start}, to start the game. Any other input will end the program. ")
-STARTGAME1 = "false"
-CODE = "1"
+STARTGAME1 = False
+HASCODE = False
+HASOBJECT = False
+START = False
 
-if STARTGAME.lower() == ("start"):
-    STARTGAME1 = "True"
-    print("Starting Game Shortly. . .")
-else: 
-    print("Invalid input, program ending.")
-    exit()
+STARTGAME = input("Please type {start}, to start the game.")
 
-if STARTGAME1 == "True":
+while START == False:
+    if STARTGAME.lower() == "start":
+        print("Starting Game Shortly. . .")
+        START = True
+    elif STARTGAME.lower() == "c":
+        print("Exiting Program Shortly. . .")
+        exit()
+    else:
+        STARTGAME = input("You did not input {start}, please input it again or type {C} to cancel.")
+
+if START == True:
     print("You wake up in the middle of curry's after a crazy black friday sale and it is locked with nobody around, you must escape.")
     CONTINUE = input("Press {E} to continue.")
+    CONTINUEGAME = True
 else: 
-    print("STARTGAME ERROR")
-    exit()
+    print("STARTGAME ERROR, Line 22")
 
-CONTINUE = CONTINUE.lower()
+while CONTINUEGAME == True:
+    if CONTINUE.lower() == "e":
+        START = True
+        CONTINUEGAME = False
+    elif CONTINUE.lower() == "c":
+        print("Exiting Program Shortly. . .")
+        exit()
+    else:
+        CONTINUE = input("You did not input {E}, please input it again or type {C} to cancel.")
 
-if CONTINUE.lower() == "e":
-    print("There are 4 store sections: Electronics, Tills, Warehouse and Exit. You must find the code to escape the building.")
-    CONTINUE = "True"
+VISITEDELECTRONICS = False
+VISITEDWAREHOUSE = False
+VISITEDTILLS = False
+HASTOOL = False
+CODE = 4785
+INPUTSAID = False
+USEITEM = ""
+DOORINPUT = ""
+VISITEDDOORS = False
+WAREHOUSECHECK = True
+
+while HASCODE == False and WAREHOUSECHECK == True:
+    while HASCODE == False and INPUTSAID == False:
+        CHOICE = input("There are four store sections you can search in order to attempt to escape, please choose one of the following. Tills, Warehouse, Electronics or Doors.")
+        INPUTSAID = True
+    if CHOICE.lower() == "tills" and VISITEDTILLS == False:
+        print("You arrive at the destroyed Tills and notice a bat, you pick it up, this could be useful. You must continue looking.")
+        VISITEDTILLS = True
+        HASTOOL = True
+        INPUTSAID = False
+        # Electronics First Time
+    elif CHOICE.lower() == "electronics" and VISITEDELECTRONICS == False:
+        print("You arrive at electronics and look around, you find nothing. You Must Continue Looking Elsewhere.")
+        VISITEDELECTRONICS = True
+        INPUTSAID = False
+        # Doors First Time
+    elif CHOICE.lower() == "doors" and HASCODE == False:
+        print("You cannot go to the doors without a code.")
+        CHOICE = ""
+        INPUTSAID = False
+    elif DOORINPUT == 4785 and HASCODE == True:
+        print("You have inputted the correct code, game over. Thanks for playing!")
+        exit()
+    elif DOORINPUT.lower() not in ["c", 4785] and VISITEDDOORS == True:
+        print("You have not inputted a correct code, please find it.")
+        INPUTSAID = False
+    elif CHOICE.lower() == "warehouse" and VISITEDWAREHOUSE == True:
+        INPUTSAID = False
+        print("You have already been to the Warehouse.")
+    elif CHOICE.lower() == "warehouse" and VISITEDWAREHOUSE == False:
+        WAREHOUSECHECK = False
+    elif CHOICE.lower() == "tills" and VISITEDTILLS == True:
+        INPUTSAID = False
+        print("You have already been to the Tills.")
+    elif CHOICE.lower() == "electronics" and VISITEDELECTRONICS == True:
+        INPUTSAID = False
+        print("You have already been to Electronics.")
 else: 
-    print("E was not inputted, ending program.")
-    exit()
+    print("Error")
 
-if CONTINUE == "True":
-    CHOICE1 = input(f"Where would you like to search? Electronics, Tills or Warehouse.")
-else:
-    print("Invalid input, program ending.")
-    exit()
-CHOICE1 = CHOICE1.lower()
-if CHOICE1.lower() == "electronics":
-    print("You head over to Electronics.")
-    print("You search around Electronics and do not appear to find anything, you get fustrated and punch a laptop. You move on.")
-    ELECTRONICSDONE = "True"
-    TILLSDONE = "false"
-    WAREHOUSEDONE = "false"
-elif CHOICE1.lower() == "tills":
-    print("You head over to the Tills.")
-    print("You search around the tills and find nothing. You Move On")
-    ELECTRONICSDONE = "false"
-    TILLSDONE = "True"
-    WAREHOUSEDONE = "false"
-elif CHOICE1.lower() == "warehouse":
-    print("You head over to the Warehouse.")
-    print("You head over to the Warehouse and after a long time searching you find a note that says, in-case of locked in combination is 5164. You have the code.")
-    ELECTRONICSDONE = "false"
-    TILLSDONE = "false"
-    WAREHOUSEDONE = "True"
-    HASCODE = "True"
-else:
-    print("Invalid choice inputted, ending program.")
-    exit()
+while WAREHOUSECHECK == False:
+    if CHOICE.lower() == "warehouse" and VISITEDWAREHOUSE == False:
+        print("You arrive at the Warehouse and notice it is boarded up, you need some form of item to get in. You Must Continue Looking Elsewhere.")
+        USEITEM = input("If you have a item to break in, input {E}.")
+        VISITEDWAREHOUSE = False
+        INPUTSAID = False
+        CHOICE = ""
+    elif USEITEM.lower() == "e" and HASTOOL == False:
+        print("You do not have a item to break in, look around.")
+        USEITEM = ""
+        INPUTSAID = False
+        WAREHOUSECHECK = False
+    elif USEITEM.lower() == "e" and HASTOOL == True:
+        print("You Break In And Find A Note Containing The Numbers {4745} alongside some words that read Front Door Code. Maybe Try This On The Front Door.")
+        INPUTSAID = False
+        HASCODE = True
+        WAREHOUSECHECK = False
 
-if HASCODE == "True":
-    print("You have found the code and you head out to the entrance, you reach the alarm system and it is asking you input the code.")
-    CODE = input("Please insert the pin to unlock doors.")
-
-if CODE == "5164" and HASCODE == "True":
-    print("You unlock the door and leave Curry's, you are now free. However, a criminal noticed the unlocked door and robs the curry's.")
-    print("Game over.")
-    exit()
-elif CODE != "5164" and HASCODE == "True":
-    print("You input the wrong code and the alarms blare loudly, police show up and arrest you for burglary.")
-    print("Game Over.")
-    exit()
-
-if HASCODE == "false":
-    CHOICE2 = input(f"You have now searched {CHOICE1}, where would you like to search next? Electronics, Tills or Warehouse, you cannot return to a place you have already been.")
-
-if CHOICE2.lower() == "electronics" and (ELECTRONICSDONE == "false"):
-    print("You head over to Electronics.")
-    print("You search around Electronics and do not appear to find anything, you get fustrated and punch a laptop -£2000. You move on.")
-    PROPERTYDAMAGED = 2000
-    ELECTRONICSDONE = "True"
-elif CHOICE2.lower() == "tills" and TILLSDONE == "false":
-    print("You head over to the Tills.")
-    print("You search around the tills and find nothing. You Move On")
-    TILLSDONE = "True"
-elif CHOICE2.lower() == "warehouse" and WAREHOUSEDONE == "false":
-    print("You head over to the Warehouse.")
-    print("You head over to the Warehouse and after a long time searching you find a note that says, in-case of locked in combination is 5164. You have the code.")
-    WAREHOUSEDONE = "True"
-    HASCODE = "True"
-elif CHOICE2.lower() == "electronics" and ELECTRONICSDONE == "True":
-    print("You cannot search the same part of the store again, please try again.")
-    exit()
-elif CHOICE2.lower() == "tills" and TILLSDONE == "True":
-    print("You cannot search the same part of the store again, please try again.")
-    exit()
-elif CHOICE2.lower() == "warehouse" and WAREHOUSEDONE == "True":
-    print("You cannot search the same part of the store again, please try again.")
-    exit()
-else:
-    print("Invalid choice inputted, ending program.")
-    exit()
-
-if HASCODE == "True":
-    print("You have found the code and you head out to the entrance, you reach the alarm system and it is asking you input the code.")
-    CODE = input("Please insert the pin to unlock doors.")
-
-if CODE == "5164" and HASCODE == "True":
-    print("You unlock the door and leave Curry's, you are now free. However, a criminal noticed the unlocked door and robs the curry's.")
-    print("Game over.")
-    exit()
-elif CODE != "5164" and HASCODE == "True":
-    print("You input the wrong code and the alarms blare loudly, police show up and arrest you for burglary.")
-    print("Game Over.")
-    exit()
-
-
-if HASCODE == "false":
-    CHOICE3 = input(f"You have now searched {CHOICE2}, where would you like to search next? Electronics, Tills or Warehouse, you cannot return to a place you have already been.")
-
-if CHOICE3.lower() == "electronics" and ELECTRONICSDONE == "false":
-    print("You head over to Electronics.")
-    print("You search around Electronics and do not appear to find anything, you get fustrated and punch a laptop. You move on.")
-    PROPERTYDAMAGED = 2000
-    ELECTRONICSDONE = "True"
-elif CHOICE3.lower() == "tills" and TILLSDONE == "false":
-    print("You head over to the Tills.")
-    print("You search around the tills and find nothing. You Move On")
-    TILLSDONE = "True"
-elif CHOICE3.lower() == "warehouse" and WAREHOUSEDONE == "false":
-    print("You head over to the Warehouse.")
-    print("You head over to the Warehouse and after a long time searching you find a note that says, in-case of locked in combination is 5164. You have the code.")
-    WAREHOUSEDONE = "True"
-    HASCODE = "True"
-elif CHOICE3.lower() == "electronics" and ELECTRONICSDONE == "True":
-    print("You cannot search the same part of the store again, please try again.")
-    exit()
-elif CHOICE3.lower() == "tills" and TILLSDONE == "True":
-    print("You cannot search the same part of the store again, please try again.")
-    exit()
-elif CHOICE3.lower() == "warehouse" and WAREHOUSEDONE == "True":
-    print("You cannot search the same part of the store again, please try again.")
-    exit()
-else:
-    print("Invalid choice inputted, ending program.")
-    exit()
-
-if HASCODE == "True":
-    print("You have found the code and you head out to the entrance, you reach the alarm system and it is asking you input the code.")
-    CODE = input("Please insert the pin to unlock doors.")
-
-if CODE == "5164" and HASCODE == "True":
-    print("You unlock the door and leave Curry's, you are now free. However, a criminal noticed the unlocked door and robs the curry's.")
-    print("Game over.")
-    exit()
-elif CODE != "5164" and HASCODE == "True":
-    print("You input the wrong code and the alarms blare loudly, police show up and arrest you for burglary.")
-    print("Game Over.")
-    exit()
+while HASCODE == True:
+    if DOORINPUT == 4785 and HASCODE == True:
+        print("You have inputted the correct code, game over. Thanks for playing!")
+        exit()
+    elif DOORINPUT.lower() not in ["c", 4785] and VISITEDDOORS == True:
+        print("You have not inputted a correct code, please find it.")
+        INPUTSAID = False
+    else: 
+        print("Error.")
